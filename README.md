@@ -67,7 +67,7 @@ sel-ocr/
 2. Ensure `tesseract` is installed and available in your PATH:
    ```bash
    tesseract --version
-````
+   ````
 
 3. Set JVM properties (VM options in IntelliJ or `mvn test`):
 
