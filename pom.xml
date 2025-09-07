@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.ss</groupId>
+    <artifactId>sel-ocr</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <selenium.java.version>4.33.0</selenium.java.version>
+        <webdriver.manager.version>6.1.0</webdriver.manager.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.version>3.11.0</maven.compiler.version>
+        <maven.surefire.version>3.1.2</maven.surefire.version>
+    </properties>
+
+    <dependencies>
+        <!-- Selenium 4 -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <!-- <version>4.35.0</version>-->
+            <version>${selenium.java.version}</version>
+        </dependency>
+
+        <!-- Tess4J (Tesseract OCR for Java) -->
+        <dependency>
+            <groupId>net.sourceforge.tess4j</groupId>
+            <artifactId>tess4j</artifactId>
+            <version>5.11.0</version>
+        </dependency>
+
+        <!-- WebDriver Manager for auto-driver binaries -->
+        <dependency>
+          <groupId>io.github.bonigarcia</groupId>
+          <artifactId>webdrivermanager</artifactId>
+<!--          <version>6.3.1</version>-->
+            <version>${webdriver.manager.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.11.0</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>selenium-ocr</finalName>
+        <plugins>
+            <!-- To compile the source code using specific java version. also to force IDE to change the settings -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <release>21</release>
+                </configuration>
+            </plugin>
+
+            <!-- To run the tests using specific parameters, change thread count, testng report output directory etc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <isRemote>false</isRemote>
+                        <browser>chrome</browser>
+                    </systemPropertyVariables>
+                    <suiteXmlFiles>
+                        <file>src/test/resources/test-suites/flight-reservation.xml</file>
+                        <file>src/test/resources/test-suites/vendor-portal.xml</file>
+                    </suiteXmlFiles>
+                    <threadCount>3</threadCount>
+                    <reportsDirectory>target/test-output</reportsDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
